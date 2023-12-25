@@ -1,3 +1,6 @@
+import utils.utils as utils
+
+
 def check_is_instance(var_name, var, var_type):
     if not isinstance(var, var_type):
         raise TypeError(
@@ -6,7 +9,7 @@ def check_is_instance(var_name, var, var_type):
 
 
 def check_is_non_negative(number_name, number):
-    if number < 0:
+    if not utils.is_non_negative(number):
         raise ValueError(
             f"{number_name} must be greater than or equal to 0, got {number}"
         )
@@ -26,6 +29,13 @@ def check_is_index(index, element_count):
         )
 
 
+def check_is_iterable(iterable_name, iterable):
+    if not utils.is_iterable(iterable):
+        raise TypeError(
+            f"Expected {iterable_name} to be an iterable, but got" f"{type(iterable)}"
+        )
+
+
 def check_is_iterable_of_length(
     iterable_name,
     iterable,
@@ -34,6 +44,7 @@ def check_is_iterable_of_length(
     min_length=None,
     max_length=None,
 ):
+    check_is_iterable(iterable_name, iterable)
     check_is_instance(iterable_name, iterable, iterable_type)
     if required_length is not None:
         if len(iterable) != required_length:
@@ -41,6 +52,7 @@ def check_is_iterable_of_length(
                 f"Error: {iterable_name} has length {len(iterable)}, "
                 f"expected length == {required_length}."
             )
+
     else:
         if min_length is not None:
             if len(iterable) < min_length:
@@ -48,6 +60,7 @@ def check_is_iterable_of_length(
                     f"Error: {iterable_name} has length {len(iterable)}, "
                     f"expected length > {min_length}."
                 )
+
         if max_length is not None:
             if len(iterable) > max_length:
                 raise ValueError(
@@ -81,3 +94,15 @@ def check_is_iterable_of_unique_elements_with_length(
         iterable_name, iterable, iterable_type, required_length, min_length, max_length
     )
     check_elements_are_unique(iterable_name, iterable)
+
+
+def check_is_2d_coordinate(coordinate, max_coordinates=None):
+    check_is_iterable_of_length("2D_coordinate", coordinate, tuple, 2)
+    for i, dimension in enumerate(coordinate):
+        check_is_non_negative_int(f"2D_coordinate[{i}]", dimension)
+        if max_coordinates is not None:
+            if dimension >= max_coordinates[i]:
+                raise ValueError(
+                    f"coordinate {coordinate} is out of bounds for max "
+                    f"{max_coordinates}"
+                )
