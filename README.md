@@ -35,6 +35,6 @@ Table of classes and main with progress
 | :hourglass: | Game |   | Marsusss | feat/add-Game-class |
 | :hourglass: | Player |   | Marsusss | feat/Add-Player-parent-class |
 | :x: | HumanPlayer |   |   |   |
-| :hourglass: | AiPlayer    |   | Marsusss |   |
+| :hourglass: | AiPlayer    |   | Marsusss | feat/Add-Player-parent-class |
 | :x: | Model       |   |   |   |
 | :x: | main        |   |   |   |
