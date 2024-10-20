@@ -7,6 +7,7 @@ import utils.utils as utils
 from modules.chess_piece import ChessPiece
 from modules.king import King
 from modules.pawn import Pawn
+from modules.knight import Knight
 
 
 class Board:
@@ -25,6 +26,10 @@ class Board:
             self[6] = [
                 Pawn((6, i), player_colors[1], 2 * 8 + i, "up") for i in range(8)
             ]
+            self[0, 1] = Knight((0, 1), player_colors[0], 1)
+            self[0, 6] = Knight((0, 6), player_colors[0], 6)
+            self[7, 1] = Knight((7, 1), player_colors[1], 3 * 8 + 1)
+            self[7, 6] = Knight((7, 6), player_colors[1], 3 * 8 + 6)
         else:
             check_utils.check_is_iterable_of_length(
                 "board", board, list, min_length=3, max_length=20
